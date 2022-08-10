@@ -1,3 +1,4 @@
+from textblob import TextBlob
 import sys
 import tweepy
 import matplotlib.pyplot as plt
@@ -20,5 +21,15 @@ file = open("config.json")
 config = json.load(file)
 consumerKey = config['consumerKey']
 consumerSecret = config['consumerSecret']
+accessToken = config['accessToken']
+accessTokenSecret = config['accessTokenSecret']
 
-# auth = tweepy.OAuthHandler(consumerKey, consumerSecret)
+auth = tweepy.OAuthHandler(consumerKey, consumerSecret)
+auth.set_access_token(accessToken, accessTokenSecret)
+api = tweepy.API(auth)
+
+try:
+    api.verify_credentials()
+    print("Good!")
+except:
+    print("No bueno")
