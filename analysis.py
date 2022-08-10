@@ -14,4 +14,11 @@ from langdetect import detect
 from nltk.stem import SnowballStemmer
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from sklearn.feature_extraction.text import CountVectorizer
+import json
 
+file = open("config.json")
+config = json.load(file)
+consumerKey = config['consumerKey']
+consumerSecret = config['consumerSecret']
+
+# auth = tweepy.OAuthHandler(consumerKey, consumerSecret)
