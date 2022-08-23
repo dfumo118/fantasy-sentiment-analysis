@@ -44,10 +44,13 @@ def pull_data(players):
         tweet_list = []
         for tweet in tweets.data:
             tweet_list.append(tweet.text)
-        
-        return
+
+        tweet_list = [*set(tweet_list)] # removes duplicates
+
+        for tweet in tweet_list:
             # analyze tweets for scores
+            break
 
 
 if __name__ == "__main__":
-    pull_data(["Justin Fields"])
+    pull_data(["Patrick Mahomes"])
