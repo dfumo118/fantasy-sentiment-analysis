@@ -1,4 +1,6 @@
-def calculate_fantasy_points(player_row):
+import nfl_data_py
+
+def calculate_fantasy_points(player):
     # by position
 
     # QB
