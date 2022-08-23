@@ -10,5 +10,3 @@ def get_players(df):
 def save_to_csv(df):
     df.to_csv("player_data.csv", index=False)
 
-if __name__ == "__main__":
-    df = csv_to_df("player_data.csv")
