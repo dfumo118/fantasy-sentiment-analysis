@@ -19,8 +19,23 @@ import json
 import csv
 import datetime
 
+def pull_tweet_info(client, player):
+    start_date = (datetime.datetime.now() - datetime.timedelta(days=5)).strftime("%Y-%m-%dT00:00:00Z")
+    
+    tweets = client.search_recent_tweets(
+            query= f"{player} fantasy",
+            start_time= start_date
+        )
+
+    tweet_list = []
+    for tweet in tweets.data:
+        tweet_list.append(tweet.text)
+
+    tweet_list = [*set(tweet_list)]
+    return tweet_list
+
 # to be ran on tuesday following matchups
-def pull_data(players):
+def pull_tweet_data(players):
     file = open("config.json")
     config = json.load(file)
     file.close()
@@ -29,24 +44,16 @@ def pull_data(players):
         bearer_token= config['bearerToken']
         )
 
-    start_date = (datetime.datetime.now() - datetime.timedelta(days=5)).strftime("%Y-%m-%dT00:00:00Z")
     # make query using players, start, end
     for player in players:
-        tweets = client.search_recent_tweets(
-            query= f"{player} fantasy",
-            start_time= start_date
-        )
-
-        tweet_list = []
-        for tweet in tweets.data:
-            tweet_list.append(tweet.text)
-
-        tweet_list = [*set(tweet_list)] # removes duplicates
+        tweet_list = pull_tweet_info(client, player)
 
         for tweet in tweet_list:
             # analyze tweets for scores
             break
 
+def pull_fantasy_info(player):
+    pass
 
-if __name__ == "__main__":
-    pull_data(["Patrick Mahomes"])
+def pull_fantasy_data(players):
+    pass
