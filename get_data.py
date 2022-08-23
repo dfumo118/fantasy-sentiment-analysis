@@ -19,29 +19,35 @@ import json
 import csv
 import datetime
 
-file = open("config.json")
-config = json.load(file)
-file.close()
+# to be ran on tuesday following matchups
+def pull_data(players):
+    file = open("config.json")
+    config = json.load(file)
+    file.close()
 
-players = {}
-start_date = ""
-end_date = ""
-with open("player_data.csv") as f:
-    r = csv.reader(f, delimiter=',')
-    line_count = 0
-    for row in r:
-        if line_count == 0:
-            last_date = row[len(row)-1]
-            month = int(last_date[0:-2])
-            year = int(last_date[-2:])
+    client = tweepy.Client(
+        bearer_token= config['bearerToken'],
+        consumer_key= config['consumerKey'],
+        consumer_secret= config['consumerSecret'],
+        access_token= config['accessToken'],
+        access_token_secret= config['accessTokenSecret']
+        )
 
-            start_date = datetime.datetime(2000+year, month+1, 1).strftime("%Y-%m-%dT00:00:00Z")
-            end_date = (datetime.datetime(2000+year, month+2, 1) - datetime.timedelta(days=1)).strftime("%Y-%m-%dT00:00:00Z")
+    start_date = (datetime.datetime.now() - datetime.timedelta(days=5)).strftime("%Y-%m-%dT00:00:00Z")
+    # make query using players, start, end
+    for player in players:
+        tweets = client.search_recent_tweets(
+            query= f"{player} fantasy",
+            start_time= start_date
+        )
 
-        else:
-            players[row[0]] = []
-        line_count += 1
+        tweet_list = []
+        for tweet in tweets.data:
+            tweet_list.append(tweet.text)
+        
+        return
+            # analyze tweets for scores
 
-client = tweepy.Client(bearer_token=config['bearerToken'])
 
-# make query using players, start, end
+if __name__ == "__main__":
+    pull_data(["Justin Fields"])
