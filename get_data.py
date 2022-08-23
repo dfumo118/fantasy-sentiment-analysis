@@ -26,11 +26,7 @@ def pull_data(players):
     file.close()
 
     client = tweepy.Client(
-        bearer_token= config['bearerToken'],
-        consumer_key= config['consumerKey'],
-        consumer_secret= config['consumerSecret'],
-        access_token= config['accessToken'],
-        access_token_secret= config['accessTokenSecret']
+        bearer_token= config['bearerToken']
         )
 
     start_date = (datetime.datetime.now() - datetime.timedelta(days=5)).strftime("%Y-%m-%dT00:00:00Z")
