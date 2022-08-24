@@ -10,14 +10,11 @@ import pycountry
 import re
 import string
 from PIL import Image
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
-from langdetect import detect
-from nltk.stem import SnowballStemmer
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
-from sklearn.feature_extraction.text import CountVectorizer
 import json
 import csv
 import datetime
+import sentiment_analysis as sa
+from sentiment_analysis import Sentiment
 
 # to be ran on tuesday following matchups
 def pull_data(players):
@@ -42,10 +39,25 @@ def pull_data(players):
             tweet_list.append(tweet.text)
 
         tweet_list = [*set(tweet_list)] # removes duplicates
-
+        pos = 0
+        neg = 0
+        neu = 0
+        total = len(tweet_list)
         for tweet in tweet_list:
             # analyze tweets for scores
-            break
+            sentiment = sa.analyse_sentiment(tweet)
+            if sentiment == Sentiment.POS:
+                pos += 1
+            elif sentiment == Sentiment.NEG:
+                neg += 1
+            else:
+                neu += 1
+        
+        # assign player percentages
+        pos_per = sa.percentage(pos, total)
+        neg_per = sa.percentage(neg, total)
+        neu_per = sa.percentage(neu, total)
+                
 
 
 if __name__ == "__main__":
