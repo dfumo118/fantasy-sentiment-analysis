@@ -11,7 +11,6 @@ import re
 import string
 from PIL import Image
 import json
-import csv
 import datetime
 import sentiment_analysis as sa
 from sentiment_analysis import Sentiment
