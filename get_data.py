@@ -18,6 +18,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 import json
 import csv
 import datetime
+import calculate_points as cp
 
 def pull_tweet_info(client, player):
     start_date = (datetime.datetime.now() - datetime.timedelta(days=5)).strftime("%Y-%m-%dT00:00:00Z")
@@ -52,8 +53,6 @@ def pull_tweet_data(players):
             # analyze tweets for scores
             break
 
-def pull_fantasy_info(player):
-    pass
-
 def pull_fantasy_data(players):
-    pass
+    for player in players:
+        print(cp.get_fantasy_points(player, 1))
