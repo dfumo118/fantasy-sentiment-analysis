@@ -10,9 +10,8 @@ def get_rosters():
 
     return df
 
-def get_fantasy_points(player, week):
-    rosters = get_rosters()
-    weekly = nfl.import_weekly_data([2021], 
+def get_weekly():
+    df = nfl.import_weekly_data([2021], 
         [
             'player_id',
             'recent_team',
@@ -20,6 +19,12 @@ def get_fantasy_points(player, week):
             'fantasy_points_ppr'
         ]
     )
+
+    return df
+
+def get_fantasy_points(player, week):
+    rosters = get_rosters()
+    weekly = get_weekly()
 
     df = weekly.merge(rosters)
     row = df.loc[df['player_name'] == player].loc[df['week'] == week]
