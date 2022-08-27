@@ -1,23 +1,9 @@
-from textblob import TextBlob
-import sys
 import tweepy
-import matplotlib.pyplot as plt
 import pandas as pd
-import numpy as np
-import os
-import nltk
-import pycountry
-import re
-import string
-from PIL import Image
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
-from langdetect import detect
-from nltk.stem import SnowballStemmer
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
-from sklearn.feature_extraction.text import CountVectorizer
 import json
-import csv
 import datetime
+import sentiment_analysis as sa
+from sentiment_analysis import Sentiment
 import calculate_points as cp
 
 def pull_tweet_info(client, player):
@@ -37,6 +23,7 @@ def pull_tweet_info(client, player):
 
 # to be ran on tuesday following matchups
 def pull_tweet_data(players):
+    result = pd.DataFrame([], columns=['name', 'pos', 'neu', 'neg', 'tweets'])
     file = open("config.json")
     config = json.load(file)
     file.close()
@@ -48,10 +35,28 @@ def pull_tweet_data(players):
     # make query using players, start, end
     for player in players:
         tweet_list = pull_tweet_info(client, player)
-
+        pos = 0
+        neg = 0
+        neu = 0
+        total = len(tweet_list)
         for tweet in tweet_list:
             # analyze tweets for scores
-            break
+            sentiment = sa.analyse_sentiment(tweet)
+            if sentiment == Sentiment.POS:
+                pos += 1
+            elif sentiment == Sentiment.NEG:
+                neg += 1
+            else:
+                neu += 1
+        
+        # assign player percentages
+        pos_per = sa.percentage(pos, total)
+        neg_per = sa.percentage(neg, total)
+        neu_per = sa.percentage(neu, total)
+
+        result.loc[len(result.index)] = [player, pos_per, neu_per, neg_per, tweet_list]
+
+    return result
 
 def pull_fantasy_data(players):
     for player in players:
