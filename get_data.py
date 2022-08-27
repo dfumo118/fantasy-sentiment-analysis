@@ -7,7 +7,7 @@ from sentiment_analysis import Sentiment
 
 # to be ran on tuesday following matchups
 def pull_data(players):
-    result = pd.DataFrame([], columns=['name', 'pos', 'neu', 'neg'])
+    result = pd.DataFrame([], columns=['name', 'pos', 'neu', 'neg', 'tweets'])
 
     file = open("config.json")
     config = json.load(file)
@@ -49,6 +49,6 @@ def pull_data(players):
         neg_per = sa.percentage(neg, total)
         neu_per = sa.percentage(neu, total)
 
-        result.loc[len(result.index)] = [player, pos_per, neu_per, neg_per]
+        result.loc[len(result.index)] = [player, pos_per, neu_per, neg_per, tweet_list]
 
     return result
