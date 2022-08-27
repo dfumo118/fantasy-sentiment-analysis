@@ -4,11 +4,26 @@ import json
 import datetime
 import sentiment_analysis as sa
 from sentiment_analysis import Sentiment
+import calculate_points as cp
+
+def pull_tweet_info(client, player):
+    start_date = (datetime.datetime.now() - datetime.timedelta(days=5)).strftime("%Y-%m-%dT00:00:00Z")
+    
+    tweets = client.search_recent_tweets(
+            query= f"{player} fantasy",
+            start_time= start_date
+        )
+
+    tweet_list = []
+    for tweet in tweets.data:
+        tweet_list.append(tweet.text)
+
+    tweet_list = [*set(tweet_list)]
+    return tweet_list
 
 # to be ran on tuesday following matchups
-def pull_data(players):
+def pull_tweet_data(players):
     result = pd.DataFrame([], columns=['name', 'pos', 'neu', 'neg', 'tweets'])
-
     file = open("config.json")
     config = json.load(file)
     file.close()
@@ -17,19 +32,9 @@ def pull_data(players):
         bearer_token= config['bearerToken']
         )
 
-    start_date = (datetime.datetime.now() - datetime.timedelta(days=5)).strftime("%Y-%m-%dT00:00:00Z")
     # make query using players, start, end
     for player in players:
-        tweets = client.search_recent_tweets(
-            query= f"{player} fantasy",
-            start_time= start_date
-        )
-
-        tweet_list = []
-        for tweet in tweets.data:
-            tweet_list.append(tweet.text)
-
-        tweet_list = [*set(tweet_list)] # removes duplicates
+        tweet_list = pull_tweet_info(client, player)
         pos = 0
         neg = 0
         neu = 0
@@ -52,3 +57,7 @@ def pull_data(players):
         result.loc[len(result.index)] = [player, pos_per, neu_per, neg_per, tweet_list]
 
     return result
+
+def pull_fantasy_data(players):
+    for player in players:
+        print(cp.get_fantasy_points(player, 1))
