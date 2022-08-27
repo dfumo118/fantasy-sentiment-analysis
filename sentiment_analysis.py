@@ -1,8 +1,5 @@
+import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
-from langdetect import detect
-from nltk.stem import SnowballStemmer
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
-from sklearn.feature_extraction.text import CountVectorizer
 from enum import Enum
 
 class Sentiment(Enum):
