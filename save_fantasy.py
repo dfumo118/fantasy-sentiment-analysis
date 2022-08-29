@@ -1,4 +1,3 @@
-from cmath import nan
 import get_data as gd
 import interact_csv as ic
 
