@@ -58,6 +58,10 @@ def pull_tweet_data(players):
 
     return result
 
-def pull_fantasy_data(players):
+def pull_fantasy_data(players, week):
+    result = pd.DataFrame([], columns=['name', 'points'])
+
     for player in players:
-        print(cp.get_fantasy_points(player, 1))
+        result.loc[len(result.index)] = [player, cp.get_fantasy_points(player, week)]
+
+    return result
