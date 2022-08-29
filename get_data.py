@@ -63,3 +63,5 @@ def pull_fantasy_data(players, week):
 
     for player in players:
         result.loc[len(result.index)] = [player, cp.get_fantasy_points(player, week)]
+
+    return result
