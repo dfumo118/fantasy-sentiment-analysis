@@ -1,7 +1,8 @@
+from matplotlib.pyplot import get
 import nfl_data_py as nfl
 
 def get_rosters():
-    df = nfl.import_rosters([2021], 
+    df = nfl.import_rosters([2022], 
         [
             'player_name',
             'player_id'
@@ -11,7 +12,7 @@ def get_rosters():
     return df
 
 def get_weekly():
-    df = nfl.import_weekly_data([2021], 
+    df = nfl.import_weekly_data([2022], 
         [
             'player_id',
             'recent_team',
