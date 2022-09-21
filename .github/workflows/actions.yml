@@ -2,7 +2,7 @@ name: run save_sentiment.py
 
 on:
   schedule:
-    - cron: "0 5 * * 2" # At 50:00 on Tuesday
+    - cron: "0 5 * * 2" # At 5:00pm on Tuesday
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
 
       - name: install python packages
         run: |
-          python -m pip install --upgrade pip
+          python3 -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: execute py script
