@@ -1,4 +1,3 @@
-from matplotlib.pyplot import get
 import nfl_data_py as nfl
 
 def get_rosters():
