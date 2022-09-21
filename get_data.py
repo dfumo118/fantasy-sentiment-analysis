@@ -1,6 +1,6 @@
 import tweepy
 import pandas as pd
-import json
+import os
 import datetime
 import sentiment_analysis as sa
 from sentiment_analysis import Sentiment
@@ -24,12 +24,13 @@ def pull_tweet_info(client, player):
 # to be ran on tuesday following matchups
 def pull_tweet_data(players):
     result = pd.DataFrame([], columns=['name', 'pos', 'neu', 'neg', 'tweets'])
-    file = open("config.json")
-    config = json.load(file)
-    file.close()
+    try:
+        BEARER_TOKEN = os.environ["BEARER_TOKEN"]
+    except:
+        return
 
     client = tweepy.Client(
-        bearer_token= config['bearerToken']
+        bearer_token= BEARER_TOKEN
         )
 
     # make query using players, start, end
