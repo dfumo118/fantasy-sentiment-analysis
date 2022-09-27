@@ -2,7 +2,7 @@ name: run save_sentiment.py
 
 on:
   schedule:
-    - cron: "0 5 * * 2" # At 5:00pm on Tuesday
+    - cron: "0 17 * * 2" # At 5:00pm on Tuesday
 
 jobs:
   build:
@@ -14,7 +14,7 @@ jobs:
       - name: setup python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.9" # install the python version needed
+          python-version: "3.9.12" # install the python version needed
 
       - name: install python packages
         run: |
