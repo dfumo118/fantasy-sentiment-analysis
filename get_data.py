@@ -7,7 +7,7 @@ from sentiment_analysis import Sentiment
 import calculate_points as cp
 
 def pull_tweet_info(client, player):
-    start_date = (datetime.datetime.now() - datetime.timedelta(days=5)).strftime("%Y-%m-%dT00:00:00Z")
+    start_date = (datetime.datetime.now() - datetime.timedelta(days=6)).strftime("%Y-%m-%dT00:00:00Z")
     
     tweets = client.search_recent_tweets(
             query= f"{player} fantasy",
