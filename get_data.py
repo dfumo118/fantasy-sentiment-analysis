@@ -15,8 +15,9 @@ def pull_tweet_info(client, player):
         )
 
     tweet_list = []
-    for tweet in tweets.data:
-        tweet_list.append(tweet.text)
+    if tweets.data:
+        for tweet in tweets.data:
+            tweet_list.append(tweet.text)
 
     tweet_list = [*set(tweet_list)]
     return tweet_list
