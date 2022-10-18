@@ -2,7 +2,7 @@ name: run save_sentiment.py
 
 on:
   schedule:
-    - cron: "0 22 * * 2" # At 5:00pm on Tuesday
+    - cron: "0 23 * * 2" # At 5:00pm on Tuesday
 
 jobs:
   build:

@@ -39,16 +39,18 @@ def pull_tweet_data(players):
         pos = 0
         neg = 0
         neu = 0
-        total = len(tweet_list)
-        for tweet in tweet_list:
-            # analyze tweets for scores
-            sentiment = sa.analyse_sentiment(tweet)
-            if sentiment == Sentiment.POS:
-                pos += 1
-            elif sentiment == Sentiment.NEG:
-                neg += 1
-            else:
-                neu += 1
+        total = 0
+        if tweet_list:
+            total = len(tweet_list)
+            for tweet in tweet_list:
+                # analyze tweets for scores
+                sentiment = sa.analyse_sentiment(tweet)
+                if sentiment == Sentiment.POS:
+                    pos += 1
+                elif sentiment == Sentiment.NEG:
+                    neg += 1
+                else:
+                    neu += 1
         
         # assign player percentages
         pos_per = sa.percentage(pos, total)

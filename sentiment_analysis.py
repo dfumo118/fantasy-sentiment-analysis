@@ -10,6 +10,7 @@ class Sentiment(Enum):
 
 
 def percentage(part, total):
+    if total == 0: return 0
     return 100*float(part)/float(total)
 
 def analyse_sentiment(string):
